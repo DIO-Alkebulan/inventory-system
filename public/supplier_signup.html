@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Registration - Inventory Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box signup-box">
+            <div class="logo">
+                <h1>Inventory System</h1>
+            </div>
+            
+            <h2>Supplier Registration</h2>
+            <p class="subtitle">Register your business to supply products</p>
+            
+            <div id="alert" class="alert" style="display: none;"></div>
+            
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="businessName">Business Name <span class="asterisk">*</span></label>
+                    <input type="text" id="businessName" name="businessName" required
+                           placeholder="Enter your business name">
+                    <small style="color: #6b7280; font-size: 12px;">
+                        This will be displayed to customers
+                    </small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Business Email <span class="asterisk">*</span></label>
+                    <input type="email" id="email" name="email" required
+                           placeholder="business@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Business Phone <span class="asterisk">*</span></label>
+                    <input type="tel" id="phone" name="phone" required
+                           placeholder="+234 800 000 0000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Business Address <span class="asterisk">*</span></label>
+                    <textarea id="address" name="address" rows="3" required
+                              placeholder="Enter your complete business address"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password <span class="asterisk">*</span></label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" required 
+                               minlength="8" placeholder="Create a strong password">
+                        <span class="toggle-password" onclick="togglePassword('password')"><i class="fas fa-eye"></i></span>
+                    </div>
+                    <div class="password-strength" id="passwordStrength"></div>
+                    <small style="color: #6b7280; font-size: 12px;">
+                        Must be at least 8 characters with uppercase, lowercase, and numbers
+                    </small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password <span class="asterisk">*</span></label>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirmPassword" name="confirmPassword" required
+                               placeholder="Re-enter your password">
+                        <span class="toggle-password" onclick="togglePassword('confirmPassword')"><i class="fas fa-eye"></i></span>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label style="display: flex; align-items: start; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" required style="width: auto; margin-top: 4px;">
+                        <span style="font-size: 13px; color: #6b7280;">
+                            I confirm that I am authorized to register this business and agree to the 
+                            <a href="">Supplier Terms of Service</a> and <a href=""></a>
+                        </span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-primary" id="signupBtn">
+                    Register Business
+                </button>
+            </form>
+            
+            <div class="login-link">
+                Already have an account? <a href="login.html">Sign In</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../assets/js/validation.js"></script>
+    <script>
+        // Password strength checker
+        document.getElementById('password').addEventListener('input', function() {
+            const strengthBar = document.getElementById('passwordStrength');
+            const password = this.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[\W]/.test(password)) strength++;
+
+            switch(strength) {
+                case 0:
+                case 1:
+                    strengthBar.textContent = 'Weak';
+                    strengthBar.style.color = 'red';
+                    break;
+                case 2:
+                case 3:
+                    strengthBar.textContent = 'Moderate';
+                    strengthBar.style.color = 'orange';
+                    break;
+                case 4:
+                case 5:
+                    strengthBar.textContent = 'Strong';
+                    strengthBar.style.color = 'green';
+                    break;
+            }
+        });
+
+        // Toggle password visibility
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = input.parentElement.querySelector('.toggle-password i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Real-time password match validation
+        document.getElementById('confirmPassword').addEventListener('input', function(e) {
+            const password = document.getElementById('password').value;
+            const confirm = e.target.value;
+            
+            if (confirm.length > 0 && password !== confirm) {
+                e.target.style.borderColor = '#ef4444';
+            } else {
+                e.target.style.borderColor = '#e5e7eb';
+            }
+        });
+
+        // Handle signup form submission
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const email = document.getElementById('email').value;
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match', 'error');
+                return;
+            }
+            
+            // Validate email format
+            if (!isValidEmail(email)) {
+                showAlert('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Validate password strength
+            const strength = checkPasswordStrength(password);
+            if (strength.class === 'weak') {
+                showAlert('Please choose a stronger password', 'error');
+                return;
+            }
+            
+            const btn = document.getElementById('signupBtn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Registering business...';
+            btn.disabled = true;
+            
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch('../auth/register_supplier.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert(data.message, 'success');
+                    e.target.reset();
+                    
+                    // Redirect to login after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    showAlert(data.message, 'error');
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Network error. Please check your connection and try again.', 'error');
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

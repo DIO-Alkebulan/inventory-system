@@ -1,0 +1,135 @@
+/* Login Container */
+.login-container {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.login-box {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 440px;
+}
+
+.signup-box {
+    max-width: 520px;
+}
+
+/* Logo */
+.logo {
+    text-align: center;
+}
+
+.logo h1 {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+/* Headings */
+.login-box h2 {
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+/* Form */
+.login-box form {
+    margin-bottom: 24px;
+}
+
+.login-box .btn-primary {
+    width: 100%;
+    margin-top: 8px;
+}
+
+/* Divider */
+.divider {
+    text-align: center;
+    margin: 24px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.divider span {
+    background: white;
+    padding: 0 16px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Register Links */
+.register-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.register-links .btn-secondary {
+    width: 100%;
+}
+
+.btn-secondary:hover {
+    transform: scale(1.05);
+}
+
+.btn-secondary:active {
+    transform: scale(1);
+}
+
+/* Login Link */
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.login-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .login-box {
+        padding: 30px 20px;
+    }
+    
+    .logo h1 {
+        font-size: 24px;
+    }
+    
+    .login-box h2 {
+        font-size: 24px;
+    }
+}
