@@ -1,0 +1,3 @@
+The entire SQL relation from my ER diagram has already been implemented on the RSU subdomain given to me, but because i'm not to familiar with Administration, i decided to provide an improved SQL script in the sql folder. I will also attach in this repo the original exported sql script created from DBeaver. This exported script was then imported in the RSU subdomain given to me.
+
+Any New changes will be reflected in this README file or specified where necessary.

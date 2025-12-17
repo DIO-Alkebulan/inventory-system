@@ -1,13 +1,11 @@
--- ============================================
 -- INVENTORY MANAGEMENT SYSTEM - DATABASE SCHEMA
--- Complete SQL Script for Setup
--- ============================================
+-- My Complete SQL Script
 
 -- Create Database
 CREATE DATABASE IF NOT EXISTS inventory_management;
 USE inventory_management;
 
--- Drop existing tables (be careful in production!)
+-- Drop existing tables if they exist
 DROP TABLE IF EXISTS Payment;
 DROP TABLE IF EXISTS OrderDetails;
 DROP TABLE IF EXISTS Orders;
@@ -326,15 +324,9 @@ END //
 DELIMITER ;
 
 -- ============================================
--- GRANT PRIVILEGES (Adjust as needed)
--- ============================================
--- GRANT ALL PRIVILEGES ON inventory_management.* TO 'your_user'@'localhost';
--- FLUSH PRIVILEGES;
-
--- ============================================
 -- VERIFICATION QUERIES
 -- ============================================
--- Run these to verify setup
+-- These are to verify setup
 
 -- Check tables created
 SHOW TABLES;
@@ -350,13 +342,7 @@ SELECT 'Orders', COUNT(*) FROM Orders
 UNION ALL
 SELECT 'Users', COUNT(*) FROM Users;
 
--- ============================================
--- SETUP COMPLETE
--- ============================================
+
 -- Default Admin Credentials:
 -- Email: admin@inventory.com
 -- Password: Admin@123
--- 
--- Sample User Credentials (all use same password):
--- Password: Admin@123
--- ============================================
